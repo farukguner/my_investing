@@ -35,12 +35,17 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 #### To-Do Tasks
 - Class'ların oluşturulması
 - Kütüphanelerin eklenmesi
-- Sağ üst köşede debug yazısının kaldırılması
+- Artı butonuna basıldığında pop-up ekranın çıkması
+- Pop-up ekranda tip, hisse, lot, tutar girişlerinin olması.
 
 
 #### Gerceklestirilenler
 - Proje Oluşturulması(C'in-1)
 - Readme.md dosyasının güncellenmesi(C'in-1)
+- NavigationBar eklendi. (C'in-2)
+- NavigationBar'a menüler eklendi. (C'in-2)
+- Renklendirme düzenlemeleri yapıldı. (C'in-2)
+- Sağ üst köşede debug yazısının kaldırıldı. (C'in-2)
 
 
 #### Kutuphaneler
