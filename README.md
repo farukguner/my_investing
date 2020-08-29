@@ -27,16 +27,19 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - Endpoint: https://finfree.app/demo
 - Headers: Authorization -> R29vZCBMdWNr
 - Type: GET
+-------- Hisseler -----------
+- Endpoint: https://api.collectapi.com/economy/hisseSenedi
+- Headers: Authorization -> apikey 03AnOc18IENnWBUzGpI0vW:6jKBmQ4fx72e1FuYU0XFeZ
+- Type: GET
 
 #### Teknolojiler;
 - Flutter
 - Dark
 
 #### To-Do Tasks
-- Class'ların oluşturulması
-- Kütüphanelerin eklenmesi
-- Artı butonuna basıldığında pop-up ekranın çıkması
-- Pop-up ekranda tip, hisse, lot, tutar girişlerinin olması.
+- API Request ile hisseleri getir.
+- SQLLite eklentisini tanımla
+- Verilerin kayıtlarını SQL üzerinden tut.
 
 
 #### Gerceklestirilenler
@@ -46,6 +49,11 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - NavigationBar'a menüler eklendi. (C'in-2)
 - Renklendirme düzenlemeleri yapıldı. (C'in-2)
 - Sağ üst köşede debug yazısının kaldırıldı. (C'in-2)
+- Toast Kütüphanesi eklendi. (C'in-3)
+- İşlem tipi için class oluşturuldu. (C'in-3)
+- Ortak metotlar için helper sınıfı oluşturuldu. (C'in-3)
+- Artı butonuna basıldığında pop-up ekranı açılıyor. (C'in-3)
+- Hisse işlemi eklemek için Pop-up ekran oluşturuldu. (C'in-3)
 
 
 #### Kutuphaneler
