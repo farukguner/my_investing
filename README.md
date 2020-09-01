@@ -41,6 +41,10 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - API Request ile hisseleri getir.
 - SQLLite eklentisini tanımla
 - Verilerin kayıtlarını SQL üzerinden tut.
+- Portföy Oluşturup isimlendir.
+- Ana Portföy yapıp açılışta onu açmaya izin ver.
+- Maliyet hesaplarken satışları da göz önüne al.
+- Hisse adedi 0 kaldıysa kâr olarak göster.
 
 
 #### Gerceklestirilenler
