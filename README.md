@@ -27,6 +27,7 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - Endpoint: https://finfree.app/demo
 - Headers: Authorization -> R29vZCBMdWNr
 - Type: GET
+#### API
 -------- Hisseler -----------
 - Endpoint: https://api.collectapi.com/economy/hisseSenedi
 - Headers: Authorization -> apikey 03AnOc18IENnWBUzGpI0vW:6jKBmQ4fx72e1FuYU0XFeZ
