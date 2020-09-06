@@ -34,15 +34,15 @@ class HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Anasayfa'),
+            label: "Anasayfa",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance),
-            title: Text('Portföy'),
+            label: "Portföy",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),
-            title: Text('Temettü'),
+            label: 'Temettü',
           ),
         ],
         currentIndex: _selectedIndex,

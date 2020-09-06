@@ -38,7 +38,7 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - Dark
 
 #### To-Do Tasks
-- API Request ile hisseleri getir.
+- Hisse DropDown'u seçilirse ek ekranda aramalı şekilde göster.
 - SQLLite eklentisini tanımla
 - Verilerin kayıtlarını SQL üzerinden tut.
 - Portföy Oluşturup isimlendir.
@@ -59,6 +59,9 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - Ortak metotlar için helper sınıfı oluşturuldu. (C'in-3)
 - Artı butonuna basıldığında pop-up ekranı açılıyor. (C'in-3)
 - Hisse işlemi eklemek için Pop-up ekran oluşturuldu. (C'in-3)
+- API Request ile hisseleri getirildi.(C'in-4)
+- Pop-up ekrana getirilen hisseler listeletildi.(C'in-4)
+- Mac ve Windows için desktop ayarları yapıldı.(C'in-4)
 
 
 #### Kutuphaneler

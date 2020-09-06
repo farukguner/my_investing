@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_investing/Models/Result.dart';
 import 'package:my_investing/Models/Types.dart';
+import 'package:http/http.dart' as http;
 
 class Helper {
   static List<Types> getTypes() {
@@ -19,13 +24,24 @@ class Helper {
     return types;
   }
 
-  static List<DropdownMenuItem<String>> getDropDownMenuItems() {
+  static List<DropdownMenuItem<String>> getDropDownTypeItems() {
     List<Types> types = getTypes();
     List<DropdownMenuItem<String>> items = new List();
     for (var item in types) {
       items.add(new DropdownMenuItem(
         value: item.type,
         child: new Text(item.type),
+      ));
+    }
+    return items;
+  }
+
+  static List<DropdownMenuItem<String>> getDropDownHisseItems(var hisse) {
+    List<DropdownMenuItem<String>> items = new List();
+    for (var item in hisse.result) {
+      items.add(new DropdownMenuItem(
+        value: item.lastpricestr,
+        child: new Text(item.code),
       ));
     }
     return items;
@@ -41,9 +57,12 @@ class _AddItemDialogState extends State<AddItemDialog> {
   final lotControl = TextEditingController();
   final costControl = TextEditingController();
   final generalControl = GlobalKey<FormState>();
+  var resultHisse;
 
   List<DropdownMenuItem<String>> types;
+  List<DropdownMenuItem<String>> hisseler;
   String currentType;
+  String currentHisse;
 
   @override
   void dispose() {
@@ -53,20 +72,21 @@ class _AddItemDialogState extends State<AddItemDialog> {
 
   @override
   void initState() {
-    types = Helper.getDropDownMenuItems();
+    types = Helper.getDropDownTypeItems();
+    getHisse();
     currentType = types[0].value;
     super.initState();
   }
 
   void addItem() {
     if (generalControl.currentState.validate()) {
-      /*Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: "Hisse Eklendi ${lotControl.text}",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 5,
           textColor: Colors.white,
-          fontSize: 16.0);*/
+          fontSize: 16.0);
     }
   }
 
@@ -85,9 +105,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
                 onChanged: changedDropDownItem,
               ),
               DropdownButton(
-                value: currentType,
-                items: types,
-                onChanged: changedDropDownItem,
+                value: currentHisse,
+                items: hisseler,
+                onChanged: changedDropDownHisse,
               ),
               TextFormField(
                 // ignore: missing_return
@@ -127,5 +147,25 @@ class _AddItemDialogState extends State<AddItemDialog> {
     setState(() {
       currentType = selectedType;
     });
+  }
+
+  void changedDropDownHisse(String selectedHisse) {
+    setState(() {
+      currentHisse = selectedHisse;
+    });
+  }
+
+  Future<Null> getHisse() async {
+    final result = await http
+        .get("https://api.collectapi.com/economy/hisseSenedi", headers: {
+      "Authorization": "apikey 03AnOc18IENnWBUzGpI0vW:6jKBmQ4fx72e1FuYU0XFeZ"
+    });
+    if (result.statusCode == 200) {
+      resultHisse = HisseJson.fromjson(json.decode(result.body));
+      hisseler = Helper.getDropDownHisseItems(resultHisse);
+      setState(() {
+        currentHisse = hisseler[0].value;
+      });
+    }
   }
 }
