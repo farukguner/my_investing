@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_investing/Models/Result.dart';
 import 'package:my_investing/Models/Types.dart';
 import 'package:http/http.dart' as http;
+import 'package:dropdown_search/dropdown_search.dart';
 
 class Helper {
   static List<Types> getTypes() {
@@ -36,13 +37,10 @@ class Helper {
     return items;
   }
 
-  static List<DropdownMenuItem<String>> getDropDownHisseItems(var hisse) {
-    List<DropdownMenuItem<String>> items = new List();
+  static List<String> getDropDownSearchHisse(var hisse) {
+    List<String> items = new List<String>();
     for (var item in hisse.result) {
-      items.add(new DropdownMenuItem(
-        value: item.lastpricestr,
-        child: new Text(item.code),
-      ));
+      items.add(item.code);
     }
     return items;
   }
@@ -58,9 +56,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
   final costControl = TextEditingController();
   final generalControl = GlobalKey<FormState>();
   var resultHisse;
+  bool isLoaded = false;
 
   List<DropdownMenuItem<String>> types;
-  List<DropdownMenuItem<String>> hisseler;
+  List<String> hisseler;
   String currentType;
   String currentHisse;
 
@@ -81,7 +80,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
   void addItem() {
     if (generalControl.currentState.validate()) {
       Fluttertoast.showToast(
-          msg: "Hisse Eklendi ${lotControl.text}",
+          msg: "$currentHisse Hisse'si Eklendi ",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 5,
@@ -97,40 +96,52 @@ class _AddItemDialogState extends State<AddItemDialog> {
       content: Form(
         key: generalControl,
         child: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              DropdownButton(
-                value: currentType,
-                items: types,
-                onChanged: changedDropDownItem,
-              ),
-              DropdownButton(
-                value: currentHisse,
-                items: hisseler,
-                onChanged: changedDropDownHisse,
-              ),
-              TextFormField(
-                // ignore: missing_return
-                validator: (lot) {
-                  if (lot.isEmpty) {
-                    return "Lot sayısı alanı boş bırakılamaz.";
-                  }
-                },
-                controller: lotControl,
-                decoration: InputDecoration(hintText: "Lot Sayısı"),
-              ),
-              TextFormField(
-                // ignore: missing_return
-                validator: (lot) {
-                  if (lot.isEmpty) {
-                    return "Maliyet alanı boş bırakılamaz.";
-                  }
-                },
-                controller: costControl,
-                decoration: InputDecoration(hintText: "Maliyetiniz"),
-              ),
-            ],
-          ),
+          child: isLoaded
+              ? ListBody(
+                  children: <Widget>[
+                    DropdownButton(
+                      value: currentType,
+                      items: types,
+                      onChanged: changedDropDownItem,
+                    ),
+                    DropdownSearch(
+                      showSearchBox: true,
+                      label: currentHisse != null && currentHisse != 'Hisse'
+                          ? resultHisse.result
+                              .singleWhere((x) => x.code == currentHisse)
+                              .text
+                          : 'Hisse',
+                      selectedItem: currentHisse,
+                      showSelectedItem: true,
+                      items: hisseler,
+                      showClearButton: true,
+                      onChanged: changedDropDownHisse,
+                    ),
+                    TextFormField(
+                      // ignore: missing_return
+                      validator: (lot) {
+                        if (lot.isEmpty) {
+                          return "Lot sayısı alanı boş bırakılamaz.";
+                        }
+                      },
+                      controller: lotControl,
+                      decoration: InputDecoration(hintText: "Lot Sayısı"),
+                    ),
+                    TextFormField(
+                      // ignore: missing_return
+                      validator: (cost) {
+                        if (cost.isEmpty) {
+                          return "Maliyet alanı boş bırakılamaz.";
+                        }
+                      },
+                      controller: costControl,
+                      decoration: InputDecoration(hintText: "Maliyetiniz"),
+                    ),
+                  ],
+                )
+              : CircularProgressIndicator(
+                  strokeWidth: 3,
+                ),
         ),
       ),
       actions: <Widget>[
@@ -151,7 +162,12 @@ class _AddItemDialogState extends State<AddItemDialog> {
 
   void changedDropDownHisse(String selectedHisse) {
     setState(() {
-      currentHisse = selectedHisse;
+      currentHisse = selectedHisse != null ? selectedHisse : 'Hisse';
+      costControl.text = selectedHisse != null
+          ? resultHisse.result
+              .singleWhere((x) => x.code == currentHisse)
+              .lastpricestr
+          : "0";
     });
   }
 
@@ -162,9 +178,13 @@ class _AddItemDialogState extends State<AddItemDialog> {
     });
     if (result.statusCode == 200) {
       resultHisse = HisseJson.fromjson(json.decode(result.body));
-      hisseler = Helper.getDropDownHisseItems(resultHisse);
+      hisseler = Helper.getDropDownSearchHisse(resultHisse);
       setState(() {
-        currentHisse = hisseler[0].value;
+        currentHisse = hisseler[0];
+        costControl.text = resultHisse.result
+            .singleWhere((x) => x.code == currentHisse)
+            .lastpricestr;
+        isLoaded = true;
       });
     }
   }

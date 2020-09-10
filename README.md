@@ -62,6 +62,10 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - API Request ile hisseleri getirildi.(C'in-4)
 - Pop-up ekrana getirilen hisseler listeletildi.(C'in-4)
 - Mac ve Windows için desktop ayarları yapıldı.(C'in-4)
+- DropDownSearch Kütüphanesi eklendi.(C'in-5)
+- Hisseler getirilirken progressbar konuldu.(C'in-5)
+- Hisse seçim alanında arama seçeneği eklendi.(C'in-5)
+- Seçile hisse'nin default değeri getirildi.(C'in-5)
 
 
 #### Kutuphaneler
@@ -70,6 +74,7 @@ Kullanılacak apiler için kullanım tipleri ver parametreler yazılmalıdır. �
 - intl: ^0.16.1 -> Epoch Time için DateFormat [Kutuphane](https://pub.dev/packages/intl/install)
 - 'dart:convert' -> JSON Parse işlemleri için; Kendi içinde var sadece import edilmesi gerekiyor.
 - fluttertoast: ^7.0.2 -> Toast messajlar için [Kutuphane](https://pub.dev/packages/fluttertoast/install)
+- dropdown_search: ^0.4.4 -> Hisse seçim için arama özellikli dropdown [Kutuphane](https://pub.dev/packages/dropdown_search/install)
 - 'package:intl/date_symbol_data_local.dart' -> Türkçe Tarih formatı için gerekli.; Widget Build edilirken en başa initializeDateFormatting('tr'); eklenmeli
 
 #### Hata yorumlamaları

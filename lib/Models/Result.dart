@@ -26,6 +26,10 @@ class Result {
       this.text,
       this.code});
 
+  String userAsString() {
+    return 'Deneme';
+  }
+
   factory Result.fromJson(Map<String, dynamic> parsedJson) {
     return Result(
       rate: double.parse(parsedJson['rate'].toString()),
